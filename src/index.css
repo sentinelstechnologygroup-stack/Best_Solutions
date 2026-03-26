@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;1,14..32,400&family=Barlow:wght@400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-sans: 'Inter', sans-serif;
+    --font-display: 'Barlow', sans-serif;
+
+    /* Brand palette — dark navy + vivid orange */
+    --background: 0 0% 98%;
+    --foreground: 215 28% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 215 28% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 28% 10%;
+
+    /* Deep navy */
+    --primary: 215 45% 14%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 215 20% 96%;
+    --secondary-foreground: 215 28% 15%;
+
+    --muted: 215 15% 94%;
+    --muted-foreground: 215 12% 46%;
+
+    /* Orange brand accent */
+    --accent: 22 100% 52%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 215 15% 90%;
+    --input: 215 15% 90%;
+    --ring: 22 100% 52%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display;
+  }
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}

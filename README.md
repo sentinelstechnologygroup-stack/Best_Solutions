@@ -19,8 +19,7 @@ npm run preview
 
 ## Notes
 
-- This project has been scrubbed of Base44 runtime dependencies.
-- The site now runs as a standard Vite React app.
+- The site runs as a standard Vite React app.
 - The contact form currently uses a mailto fallback so the site can function without a backend.
 - If you want true form capture later, wire the form to your preferred backend (Formspree, Resend, Firebase Functions, etc).
 

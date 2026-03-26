@@ -1,0 +1,51 @@
+{
+  "name": "ContactInquiry",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Full name of the person"
+    },
+    "email": {
+      "type": "string",
+      "description": "Email address"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Phone number"
+    },
+    "service_type": {
+      "type": "string",
+      "enum": [
+        "interior_painting",
+        "exterior_painting",
+        "flooring_installation",
+        "commercial_project",
+        "full_renovation",
+        "other"
+      ],
+      "description": "Type of service requested"
+    },
+    "message": {
+      "type": "string",
+      "description": "Project details or message"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "new",
+        "contacted",
+        "quoted",
+        "in_progress",
+        "completed"
+      ],
+      "default": "new",
+      "description": "Inquiry status"
+    }
+  },
+  "required": [
+    "name",
+    "email",
+    "message"
+  ]
+}
