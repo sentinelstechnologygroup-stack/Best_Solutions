@@ -1,0 +1,7 @@
+rm -rf node_modules
+rm package-lock.json
+npm install
+npm run build
+git add package.json package-lock.json
+git commit -m "Fix Vite build dependencies after Base44 scrub"
+git push
