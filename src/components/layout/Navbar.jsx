@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const NAV = [
   { label: "Home", path: "/" },
+  { label: "About", path: "/about" },
   {
     label: "Services", path: "/services",
     children: [
@@ -18,8 +19,7 @@ const NAV = [
     ],
   },
   { label: "Solutions", path: "/solutions" },
-  { label: "About", path: "/about" },
-  { label: "Gallery", path: "/gallery" },
+  //{ label: "Gallery", path: "/gallery" },
   { label: "Contact", path: "/contact" },
 ];
 

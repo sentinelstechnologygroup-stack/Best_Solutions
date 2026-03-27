@@ -106,33 +106,6 @@ export default function Solutions() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-20 bg-primary">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
-          <h2 className="font-display font-bold text-3xl sm:text-4xl text-white mb-4">
-            Ready to Get the Best Solution?
-          </h2>
-          <p className="text-white/65 leading-relaxed mb-8">
-            Tell us about your project and we'll put together a coordinated plan — painting, flooring, or anything else your project requires.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link
-              to="/contact"
-              className="inline-flex items-center gap-2 bg-accent hover:bg-accent/90 text-white font-semibold px-8 py-3.5 rounded text-base transition-colors duration-150"
-            >
-              Get the Best Solution
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link
-              to="/services"
-              className="inline-flex items-center gap-2 border border-white/30 text-white font-semibold px-8 py-3.5 rounded text-base hover:bg-white/10 transition-colors duration-150"
-            >
-              View Our Services
-            </Link>
-          </div>
-        </div>
-      </section>
-
       <HomeCTAStrip />
     </>
   );
