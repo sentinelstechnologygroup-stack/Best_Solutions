@@ -14,6 +14,7 @@ import ServiceDetail from "./pages/ServiceDetail";
 import Contact from "./pages/Contact";
 import Solutions from "./pages/Solutions";
 import SDLContact from "./pages/SDLContact";
+import SentinelsFoundation from "./pages/SentinelsFoundation";
 
 export default function App() {
   return (
@@ -29,6 +30,7 @@ export default function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/solutions" element={<Solutions />} />
             <Route path="/sdl-contact" element={<SDLContact />} />
+            <Route path="/sentinels-foundation" element={<SentinelsFoundation />} />
           </Route>
 
           <Route path="*" element={<PageNotFound />} />

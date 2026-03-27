@@ -13,7 +13,7 @@ export default function HeroSection() {
         src={IMAGES.heroInterior}
         alt="Professional interior painting by Best Solution Distribution Houston TX"
         className="absolute inset-0 w-full h-full object-cover"
-        fetchpriority="high"
+        fetchPriority="high"
       />
 
       {/* Overlay */}
