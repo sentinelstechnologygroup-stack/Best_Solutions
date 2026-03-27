@@ -1,5 +1,5 @@
 // src/components/shared/ContactForm.jsx
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { ArrowRight } from "lucide-react";
 
 const SERVICE_OPTIONS = [
@@ -39,6 +39,26 @@ function formatPageSource(pathname) {
   return `${cleaned} Form`;
 }
 
+function inferServiceFromPath(pathname) {
+  if (!pathname) return "";
+
+  const normalized = pathname.toLowerCase();
+
+  const serviceMap = [
+    { match: "/services/interior-painting", value: "Interior Painting" },
+    { match: "/services/exterior-painting", value: "Exterior Painting" },
+    { match: "/services/residential-painting", value: "Residential Painting" },
+    { match: "/services/commercial-painting", value: "Commercial Painting" },
+    { match: "/services/flooring-installation", value: "Flooring Installation" },
+    { match: "/services/drywall-repair", value: "Drywall Repair" },
+    { match: "/services/pressure-washing", value: "Pressure Washing" },
+    { match: "/services/cabinet-painting", value: "Cabinet Painting" },
+  ];
+
+  const matched = serviceMap.find((item) => normalized.includes(item.match));
+  return matched ? matched.value : "";
+}
+
 export default function ContactForm({
   formTitle = "Request Free Estimate",
   submitLabel = "Request Free Estimate",
@@ -58,6 +78,7 @@ export default function ContactForm({
         pagePath: "",
         pageTitle: "",
         leadSource: "Website Form",
+        inferredService: "",
       };
     }
 
@@ -66,6 +87,7 @@ export default function ContactForm({
     const pagePath = window.location.pathname || "";
     const pageTitle = document.title || "";
     const leadSource = formatPageSource(pagePath);
+    const inferredService = inferServiceFromPath(pagePath);
 
     return {
       siteDomain,
@@ -73,8 +95,21 @@ export default function ContactForm({
       pagePath,
       pageTitle,
       leadSource,
+      inferredService,
     };
   }, []);
+
+  useEffect(() => {
+    if (!pageMeta.inferredService) return;
+
+    setFormData((prev) => {
+      if (prev.service) return prev;
+      return {
+        ...prev,
+        service: pageMeta.inferredService,
+      };
+    });
+  }, [pageMeta.inferredService]);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -90,11 +125,13 @@ export default function ContactForm({
     setStatus({ type: "", message: "" });
 
     try {
+      const selectedService = formData.service || pageMeta.inferredService || "Not Sure";
+
       const payload = {
         "Full Name": formData.fullName,
         "Phone Number": formData.phone,
         "Email Address": formData.email,
-        "Service Needed": formData.service,
+        "Service Needed": selectedService,
         "Project Details": formData.details,
         "Form Title": formTitle,
         "Lead Source": pageMeta.leadSource,
@@ -102,7 +139,7 @@ export default function ContactForm({
         "Page Path": pageMeta.pagePath,
         "Page URL": pageMeta.pageUrl,
         "Page Title": pageMeta.pageTitle,
-        _subject: `${formTitle} — ${formData.fullName || "New Lead"} — ${pageMeta.pagePath || pageMeta.leadSource}`,
+        _subject: `[Best Solutions] ${formTitle} — ${selectedService} — ${formData.fullName || "New Lead"} — ${pageMeta.pagePath || pageMeta.leadSource}`,
       };
 
       const response = await fetch("https://formspree.io/f/xbdplyzz", {
@@ -126,7 +163,10 @@ export default function ContactForm({
           "Thanks — your request has been sent. We’ll review your project and get back to you within 24 hours.",
       });
 
-      setFormData(INITIAL_FORM);
+      setFormData({
+        ...INITIAL_FORM,
+        service: pageMeta.inferredService || "",
+      });
     } catch (error) {
       setStatus({
         type: "error",
