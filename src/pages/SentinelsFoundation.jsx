@@ -97,7 +97,7 @@ export default function SentinelsFoundation() {
 
             <div className="flex justify-center md:justify-end">
               <img
-                src="/images/mission_banner/sentinels-foundation-badge.png"
+                src="/images/mission_banner/sentinels-foundation-k9badge.png"
                 alt="Sentinels Foundation badge"
                 className="w-[260px] max-w-full object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.35)] md:w-[320px]"
               />
