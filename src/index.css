@@ -1,3 +1,4 @@
+/* src/index.css */
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;1,14..32,400&family=Barlow:wght@400;500;600;700;800;900&display=swap');
 
 @tailwind base;
@@ -9,7 +10,7 @@
     --font-sans: 'Inter', sans-serif;
     --font-display: 'Barlow', sans-serif;
 
-    /* Brand palette — dark navy + vivid orange */
+    /* Brand palette — dark navy + brand yellow */
     --background: 0 0% 98%;
     --foreground: 215 28% 10%;
 
@@ -29,16 +30,16 @@
     --muted: 215 15% 94%;
     --muted-foreground: 215 12% 46%;
 
-    /* Orange brand accent */
-    --accent: 22 100% 52%;
-    --accent-foreground: 0 0% 100%;
+    /* Yellow brand accent */
+    --accent: 42 92% 55%;
+    --accent-foreground: 215 45% 14%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
     --border: 215 15% 90%;
     --input: 215 15% 90%;
-    --ring: 22 100% 52%;
+    --ring: 42 92% 55%;
 
     --radius: 0.5rem;
   }
@@ -48,10 +49,15 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground font-sans antialiased;
   }
-  h1, h2, h3, h4 {
+
+  h1,
+  h2,
+  h3,
+  h4 {
     @apply font-display;
   }
 }
@@ -60,8 +66,8 @@
 html {
   scroll-behavior: smooth;
 }
-/* HERO TEXT SHADOW SYSTEM */
 
+/* HERO TEXT SHADOW SYSTEM */
 .text-shadow-hero {
   text-shadow: 0 4px 14px rgba(0, 0, 0, 0.85);
 }

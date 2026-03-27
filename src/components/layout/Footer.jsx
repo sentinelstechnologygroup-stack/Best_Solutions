@@ -31,7 +31,7 @@ export default function Footer() {
     <div>
       <div className="flex items-center mb-4">
         <img
-          src="/images/logo.png"
+          src="/images/logo_yellow.png"
           alt="Best Solution Distribution Logo"
 className="h-12 md:h-14 w-auto object-contain"
         />

@@ -1,33 +1,32 @@
 // src/pages/Home.jsx
-
 import React from "react";
 import HeroSection from "@/components/home/HeroSection";
 import TrustBar from "@/components/home/TrustBar";
 import ServicesGrid from "@/components/home/ServicesGrid";
-// import BeforeAfter from "@/components/home/BeforeAfter"; ❌ REMOVE
 import WhyChooseUs from "@/components/home/WhyChooseUs";
 import ProcessSection from "@/components/home/ProcessSection";
 import Testimonials from "@/components/home/Testimonials";
 import ServiceAreaSection from "@/components/home/ServiceAreaSection";
 import HomeCTAStrip from "@/components/home/HomeCTAStrip";
 import NetworkSection from "@/components/home/NetworkSection";
+import MissionBanner from "@/components/shared/MissionBanner";
 
 export default function Home() {
   return (
     <div>
       <HeroSection />
       <TrustBar />
+      <MissionBanner />
 
       {/* SERVICES */}
       <ServicesGrid />
 
-      {/* 🔥 NEW — BENJAMIN MOORE AUTHORITY SECTION */}
+      {/* BENJAMIN MOORE AUTHORITY SECTION */}
       <section className="py-16 bg-white">
         <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-10 items-center">
-          
           {/* LEFT CONTENT */}
           <div>
-            <p className="text-sm text-orange-500 font-semibold uppercase tracking-wide mb-2">
+            <p className="text-sm text-accent font-semibold uppercase tracking-wide mb-2">
               Premium Materials
             </p>
 
@@ -36,11 +35,14 @@ export default function Home() {
             </h2>
 
             <p className="text-gray-600 mb-4">
-              We are an authorized Benjamin Moore retailer, providing access to one of the most trusted paint brands in the industry.
+              We are an authorized Benjamin Moore retailer, providing access to one
+              of the most trusted paint brands in the industry.
             </p>
 
             <p className="text-gray-600 mb-6">
-              From rich, consistent color to long-lasting durability, we use premium materials that deliver results you can see and performance you can rely on.
+              From rich, consistent color to long-lasting durability, we use premium
+              materials that deliver results you can see and performance you can
+              rely on.
             </p>
 
             <ul className="space-y-2 text-gray-700">
@@ -51,7 +53,7 @@ export default function Home() {
             </ul>
           </div>
 
-          {/* RIGHT IMAGE (SAFE PLACEHOLDER) */}
+          {/* RIGHT IMAGE */}
           <div>
             <img
               src="/images/benjamin-moore-logo.png"
@@ -59,12 +61,8 @@ export default function Home() {
               className="rounded-xl shadow-lg w-full object-cover"
             />
           </div>
-
         </div>
       </section>
-
-      {/* ❌ REMOVE WEAK PROJECT SECTION */}
-      {/* <BeforeAfter /> */}
 
       {/* WHY CHOOSE US */}
       <WhyChooseUs />
