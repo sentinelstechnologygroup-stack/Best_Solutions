@@ -1,173 +1,247 @@
 // src/components/shared/ContactForm.jsx
-import React, { useState } from "react";
-import { ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
-import { EMAIL } from "@/lib/constants";
+import React, { useMemo, useState } from "react";
+import { ArrowRight } from "lucide-react";
 
-const SERVICES = [
+const SERVICE_OPTIONS = [
   "Interior Painting",
   "Exterior Painting",
   "Residential Painting",
   "Commercial Painting",
   "Flooring Installation",
-  "Epoxy / Garage Coating",
-  "Other / Not Sure",
+  "Drywall Repair",
+  "Pressure Washing",
+  "Cabinet Painting",
+  "Not Sure",
 ];
 
-const EMPTY_FORM = {
-  name: "",
+const INITIAL_FORM = {
+  fullName: "",
   phone: "",
   email: "",
-  service_type: "",
-  message: "",
+  service: "",
+  details: "",
 };
 
-export default function ContactForm({ compact = false }) {
-  const [form, setForm] = useState(EMPTY_FORM);
-  const [loading, setLoading] = useState(false);
-  const [done, setDone] = useState(false);
+function formatPageSource(pathname) {
+  if (!pathname || pathname === "/") return "Homepage Form";
 
-  const set = (k, v) => setForm((p) => ({ ...p, [k]: v }));
+  const cleaned = pathname
+    .replace(/^\/+|\/+$/g, "")
+    .split("/")
+    .filter(Boolean)
+    .map((part) =>
+      part
+        .replace(/[-_]+/g, " ")
+        .replace(/\b\w/g, (char) => char.toUpperCase())
+    )
+    .join(" / ");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+  return `${cleaned} Form`;
+}
+
+export default function ContactForm({
+  formTitle = "Request Free Estimate",
+  submitLabel = "Request Free Estimate",
+}) {
+  const [formData, setFormData] = useState(INITIAL_FORM);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState({
+    type: "",
+    message: "",
+  });
+
+  const pageMeta = useMemo(() => {
+    if (typeof window === "undefined") {
+      return {
+        siteDomain: "",
+        pageUrl: "",
+        pagePath: "",
+        pageTitle: "",
+        leadSource: "Website Form",
+      };
+    }
+
+    const siteDomain = window.location.origin || "";
+    const pageUrl = window.location.href || "";
+    const pagePath = window.location.pathname || "";
+    const pageTitle = document.title || "";
+    const leadSource = formatPageSource(pagePath);
+
+    return {
+      siteDomain,
+      pageUrl,
+      pagePath,
+      pageTitle,
+      leadSource,
+    };
+  }, []);
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    setIsSubmitting(true);
+    setStatus({ type: "", message: "" });
 
     try {
-      const subject = encodeURIComponent(
-        `New Estimate Request - ${form.service_type || "General Inquiry"}`
-      );
+      const payload = {
+        "Full Name": formData.fullName,
+        "Phone Number": formData.phone,
+        "Email Address": formData.email,
+        "Service Needed": formData.service,
+        "Project Details": formData.details,
+        "Form Title": formTitle,
+        "Lead Source": pageMeta.leadSource,
+        "Site Domain": pageMeta.siteDomain,
+        "Page Path": pageMeta.pagePath,
+        "Page URL": pageMeta.pageUrl,
+        "Page Title": pageMeta.pageTitle,
+        _subject: `${formTitle} — ${formData.fullName || "New Lead"} — ${pageMeta.pagePath || pageMeta.leadSource}`,
+      };
 
-      const body = encodeURIComponent(
-        [
-          `Name: ${form.name}`,
-          `Phone: ${form.phone}`,
-          `Email: ${form.email}`,
-          `Service: ${form.service_type || "Not selected"}`,
-          "",
-          "Project Details:",
-          form.message || "No message provided.",
-        ].join("\n")
-      );
+      const response = await fetch("https://formspree.io/f/xbdplyzz", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
 
-      window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
-      setDone(true);
-      setForm(EMPTY_FORM);
+      const result = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(result?.error || "Form submission failed.");
+      }
+
+      setStatus({
+        type: "success",
+        message:
+          "Thanks — your request has been sent. We’ll review your project and get back to you within 24 hours.",
+      });
+
+      setFormData(INITIAL_FORM);
     } catch (error) {
-      console.error("Contact form submission failed:", error);
-      alert(
-        "There was a problem opening your email app. Please call or email us directly."
-      );
+      setStatus({
+        type: "error",
+        message:
+          error?.message ||
+          "Something went wrong while sending your request. Please call us directly.",
+      });
     } finally {
-      setLoading(false);
+      setIsSubmitting(false);
     }
-  };
-
-  if (done) {
-    return (
-      <div className="flex flex-col items-center justify-center py-10 text-center gap-4">
-        <div className="w-14 h-14 rounded-full bg-accent/10 flex items-center justify-center">
-          <CheckCircle2 className="w-7 h-7 text-accent" />
-        </div>
-        <div>
-          <p className="font-display font-bold text-xl text-foreground">
-            Request Started
-          </p>
-          <p className="text-muted-foreground text-sm mt-1">
-            Your email app should have opened with your request details.
-          </p>
-        </div>
-        <button
-          onClick={() => {
-            setDone(false);
-            setForm(EMPTY_FORM);
-          }}
-          className="text-accent text-sm underline underline-offset-2"
-        >
-          Submit another request
-        </button>
-      </div>
-    );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div
-        className={`grid gap-4 ${
-          compact ? "grid-cols-1" : "grid-cols-1 sm:grid-cols-2"
-        }`}
-      >
+    <form onSubmit={handleSubmit} className="space-y-5">
+      <input
+        type="text"
+        name="_gotcha"
+        tabIndex={-1}
+        autoComplete="off"
+        className="hidden"
+      />
+
+      {status.message ? (
+        <div
+          className={`rounded-lg border px-4 py-3 text-sm ${
+            status.type === "success"
+              ? "border-green-200 bg-green-50 text-green-700"
+              : "border-red-200 bg-red-50 text-red-700"
+          }`}
+        >
+          {status.message}
+        </div>
+      ) : null}
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label
-            htmlFor="cf-name"
-            className="block text-sm font-medium text-foreground mb-1"
+            htmlFor="fullName"
+            className="mb-2 block text-sm font-semibold text-foreground"
           >
             Full Name *
           </label>
           <input
-            id="cf-name"
+            id="fullName"
+            name="fullName"
+            type="text"
             required
-            value={form.name}
-            onChange={(e) => set("name", e.target.value)}
+            autoComplete="name"
+            value={formData.fullName}
+            onChange={handleChange}
             placeholder="John Smith"
-            className="w-full border border-border rounded px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent transition-colors duration-150 bg-white"
+            className="h-12 w-full rounded-md border border-border bg-background px-4 text-sm text-foreground outline-none transition focus:border-accent"
           />
         </div>
 
         <div>
           <label
-            htmlFor="cf-phone"
-            className="block text-sm font-medium text-foreground mb-1"
+            htmlFor="phone"
+            className="mb-2 block text-sm font-semibold text-foreground"
           >
             Phone Number *
           </label>
           <input
-            id="cf-phone"
-            required
+            id="phone"
+            name="phone"
             type="tel"
-            value={form.phone}
-            onChange={(e) => set("phone", e.target.value)}
+            required
+            autoComplete="tel"
+            value={formData.phone}
+            onChange={handleChange}
             placeholder="(713) 555-0100"
-            className="w-full border border-border rounded px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent transition-colors duration-150 bg-white"
+            className="h-12 w-full rounded-md border border-border bg-background px-4 text-sm text-foreground outline-none transition focus:border-accent"
           />
         </div>
       </div>
 
       <div>
         <label
-          htmlFor="cf-email"
-          className="block text-sm font-medium text-foreground mb-1"
+          htmlFor="email"
+          className="mb-2 block text-sm font-semibold text-foreground"
         >
           Email Address *
         </label>
         <input
-          id="cf-email"
-          required
+          id="email"
+          name="email"
           type="email"
-          value={form.email}
-          onChange={(e) => set("email", e.target.value)}
+          required
+          autoComplete="email"
+          value={formData.email}
+          onChange={handleChange}
           placeholder="you@example.com"
-          className="w-full border border-border rounded px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent transition-colors duration-150 bg-white"
+          className="h-12 w-full rounded-md border border-border bg-background px-4 text-sm text-foreground outline-none transition focus:border-accent"
         />
       </div>
 
       <div>
         <label
-          htmlFor="cf-service"
-          className="block text-sm font-medium text-foreground mb-1"
+          htmlFor="service"
+          className="mb-2 block text-sm font-semibold text-foreground"
         >
           Service Needed *
         </label>
         <select
-          id="cf-service"
+          id="service"
+          name="service"
           required
-          value={form.service_type}
-          onChange={(e) => set("service_type", e.target.value)}
-          className="w-full border border-border rounded px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent transition-colors duration-150 bg-white"
+          value={formData.service}
+          onChange={handleChange}
+          className="h-12 w-full rounded-md border border-border bg-background px-4 text-sm text-foreground outline-none transition focus:border-accent"
         >
           <option value="">Select a service</option>
-          {SERVICES.map((service) => (
-            <option key={service} value={service}>
-              {service}
+          {SERVICE_OPTIONS.map((option) => (
+            <option key={option} value={option}>
+              {option}
             </option>
           ))}
         </select>
@@ -175,37 +249,29 @@ export default function ContactForm({ compact = false }) {
 
       <div>
         <label
-          htmlFor="cf-message"
-          className="block text-sm font-medium text-foreground mb-1"
+          htmlFor="details"
+          className="mb-2 block text-sm font-semibold text-foreground"
         >
           Project Details
         </label>
         <textarea
-          id="cf-message"
-          rows={compact ? 4 : 5}
-          value={form.message}
-          onChange={(e) => set("message", e.target.value)}
+          id="details"
+          name="details"
+          rows={5}
+          value={formData.details}
+          onChange={handleChange}
           placeholder="Tell us about the project, timeline, property type, and anything else we should know."
-          className="w-full border border-border rounded px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent transition-colors duration-150 bg-white resize-none"
+          className="w-full rounded-md border border-border bg-background px-4 py-3 text-sm text-foreground outline-none transition focus:border-accent"
         />
       </div>
 
       <button
         type="submit"
-        disabled={loading}
-        className="w-full inline-flex items-center justify-center gap-2 rounded bg-accent px-5 py-3 text-sm font-semibold text-accent-foreground hover:opacity-95 transition disabled:opacity-70"
+        disabled={isSubmitting}
+        className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-md bg-accent px-5 text-sm font-semibold text-white transition hover:bg-accent/90 disabled:cursor-not-allowed disabled:opacity-70"
       >
-        {loading ? (
-          <>
-            <Loader2 className="w-4 h-4 animate-spin" />
-            Preparing Request...
-          </>
-        ) : (
-          <>
-            Request Free Estimate
-            <ArrowRight className="w-4 h-4" />
-          </>
-        )}
+        {isSubmitting ? "Sending..." : submitLabel}
+        {!isSubmitting ? <ArrowRight className="h-4 w-4" /> : null}
       </button>
     </form>
   );
