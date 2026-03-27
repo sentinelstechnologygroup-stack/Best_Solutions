@@ -10,9 +10,10 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import ServicesHub from "./pages/ServicesHub";
 import ServiceDetail from "./pages/ServiceDetail";
-import Gallery from "./pages/Gallery";
+// import Gallery from "./pages/Gallery";
 import Contact from "./pages/Contact";
 import Solutions from "./pages/Solutions";
+import SDLContact from "./pages/SDLContact";
 
 export default function App() {
   return (
@@ -24,13 +25,16 @@ export default function App() {
             <Route path="/about" element={<About />} />
             <Route path="/services" element={<ServicesHub />} />
             <Route path="/services/:slug" element={<ServiceDetail />} />
-            {/*<Route path="/gallery" element={<Gallery />} />*/}
+            {/* <Route path="/gallery" element={<Gallery />} /> */}
             <Route path="/contact" element={<Contact />} />
             <Route path="/solutions" element={<Solutions />} />
+            <Route path="/sdl-contact" element={<SDLContact />} />
           </Route>
+
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>
+
       <Toaster />
     </QueryClientProvider>
   );

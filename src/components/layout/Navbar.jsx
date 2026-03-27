@@ -57,9 +57,9 @@ export default function Navbar() {
 
         <Link to="/" className="flex items-center shrink-0">
           <img
-            src="/images/logo_yellow.png"
+            src="/images/logo.png"
             alt="Best Solution Distribution Logo"
-            className="h-12 md:h-14 w-auto object-contain drop-shadow-lg"
+            className="h-40 md:h-44 w-auto object-contain drop-shadow-lg"
           />
         </Link>
 
