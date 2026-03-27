@@ -48,34 +48,43 @@ export default function Footer() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-        {/* Brand */}
-        <div>
-          <div className="flex items-center gap-2.5 mb-4">
-            <div className="w-8 h-8 bg-accent rounded flex items-center justify-center shrink-0">
-              <span className="text-white font-display font-bold text-sm">BSD</span>
-            </div>
-            <div>
-              <p className="font-display font-bold text-white text-sm leading-tight">Best Solution Distribution</p>
-            </div>
-          </div>
-          <p className="text-white/50 text-sm leading-relaxed mb-5">
-            Professional painting and flooring services serving Houston, TX and surrounding areas. Licensed, insured, and committed to quality.
-          </p>
-          <div className="space-y-2.5">
-            <a href={PHONE_HREF} className="flex items-center gap-2.5 text-sm text-white/70 hover:text-accent transition-colors duration-150">
-              <Phone className="w-4 h-4 text-accent shrink-0" />
-              {PHONE}
-            </a>
-            <a href={`mailto:${EMAIL}`} className="flex items-center gap-2.5 text-sm text-white/70 hover:text-accent transition-colors duration-150">
-              <Mail className="w-4 h-4 text-accent shrink-0" />
-              {EMAIL}
-            </a>
-            <div className="flex items-center gap-2.5 text-sm text-white/70">
-              <MapPin className="w-4 h-4 text-accent shrink-0" />
-              Houston, TX & Surrounding Areas
-            </div>
-          </div>
+    {/* Brand */}
+    <div>
+      <div className="flex items-center mb-4">
+        <img
+          src="/images/logo.png"
+          alt="Best Solution Distribution Logo"
+className="h-12 md:h-14 w-auto object-contain"
+        />
+      </div>
+
+      <p className="text-white/50 text-sm leading-relaxed mb-5">
+        Professional painting and flooring services serving Houston, TX and surrounding areas. Licensed, insured, and committed to quality.
+      </p>
+
+      <div className="space-y-2.5">
+        <a
+          href={PHONE_HREF}
+          className="flex items-center gap-2.5 text-sm text-white/70 hover:text-accent transition-colors duration-150"
+        >
+          <Phone className="w-4 h-4 text-accent shrink-0" />
+          {PHONE}
+        </a>
+
+        <a
+          href={`mailto:${EMAIL}`}
+          className="flex items-center gap-2.5 text-sm text-white/70 hover:text-accent transition-colors duration-150"
+        >
+          <Mail className="w-4 h-4 text-accent shrink-0" />
+          {EMAIL}
+        </a>
+
+        <div className="flex items-center gap-2.5 text-sm text-white/70">
+          <MapPin className="w-4 h-4 text-accent shrink-0" />
+          Houston, TX & Surrounding Areas
         </div>
+      </div>
+    </div>
 
         {/* Services */}
         <div>

@@ -60,3 +60,12 @@
 html {
   scroll-behavior: smooth;
 }
+/* HERO TEXT SHADOW SYSTEM */
+
+.text-shadow-hero {
+  text-shadow: 0 4px 14px rgba(0, 0, 0, 0.85);
+}
+
+.text-shadow-soft {
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.65);
+}

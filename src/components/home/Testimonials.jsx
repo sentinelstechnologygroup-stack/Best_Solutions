@@ -5,22 +5,22 @@ import SectionLabel from "@/components/shared/SectionLabel";
 
 const reviews = [
   {
-    name: "Marcus T.",
-    location: "Katy, TX",
-    text: "Best Solution did our entire interior — living room, hallways, bedrooms. Incredibly clean work. They protected all the furniture, finished ahead of schedule, and the results were flawless.",
-    service: "Interior Painting",
+    name: "Max M.",
+    location: "Tomball, TX",
+    text: "We hired Best Solution Distribution for a full exterior paint job along with some siding repairs, and the results exceeded our expectations. They didn’t just paint over issues — they took the time to properly repair damaged sections of siding and prep everything the right way.\n\nThe crew was professional, showed up on time every day, and kept the job site clean throughout the project. The finished product looks incredible, and you can tell the quality is going to last.\n\nIf you’re looking for a company that does things the right way instead of cutting corners, I highly recommend them.",
+    service: "Exterior Painting & Siding Repairs",
   },
   {
-    name: "Patricia R.",
-    location: "Sugar Land, TX",
-    text: "Had them do our exterior and install LVP flooring throughout. The crew was professional, courteous, and the quality is outstanding. Neighbors keep asking who we used.",
-    service: "Exterior + Flooring",
+    name: "Patrick C.",
+    location: "Magnolia, TX",
+    text: "We had a rental property that was in rough shape after a tenant moved out — scuffed walls, stains, and overall wear and tear throughout the house. Best Solution Distribution came in and completely transformed the space.\n\nThey handled all the prep work, covered everything properly, and delivered a clean, consistent finish in every room. The place honestly looks better than it did before.\n\nThe turnaround time was fast, communication was clear, and the quality of work was exactly what we needed to get the property ready for the next tenant. We’ll definitely be using them again.",
+    service: "Interior Painting – Rental Property Turnover",
   },
   {
     name: "David K.",
     location: "Pearland, TX",
-    text: "We manage a commercial office complex and Best Solution has been our go-to for two years. Always on time, no disruption to our tenants, and the pricing is fair and transparent.",
-    service: "Commercial Painting",
+    text: "We had an epoxy coating applied to our 2-car garage, and the difference is night and day. The floor went from stained and worn out to a clean, professional-looking finish that completely upgraded the space.\n\nThey took the time to prep the surface properly, which you can tell makes a huge difference in how the coating turned out. The finish is smooth, durable, and easy to maintain.\n\nThe team was efficient, knowledgeable, and clearly takes pride in their work. Highly recommend if you’re considering epoxy for your garage.",
+    service: "Epoxy Garage Coating",
   },
 ];
 

@@ -54,16 +54,14 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-16">
-            {/* Logo */}
-            <Link to="/" className="flex items-center gap-2.5 shrink-0">
-              <div className="w-8 h-8 bg-accent rounded flex items-center justify-center">
-                <span className="text-white font-display font-bold text-sm">BSD</span>
-              </div>
-              <div className="hidden sm:block">
-                <p className="font-display font-bold text-white text-sm leading-tight">Best Solution</p>
-                <p className="text-white/50 text-[10px] uppercase tracking-widest leading-tight">Distribution</p>
-              </div>
-            </Link>
+
+        <Link to="/" className="flex items-center shrink-0">
+          <img
+            src="/images/logo.png"
+            alt="Best Solution Distribution Logo"
+            className="h-12 md:h-14 w-auto object-contain drop-shadow-lg"
+          />
+        </Link>
 
             {/* Desktop Nav */}
             <nav className="hidden lg:flex items-center gap-1">
